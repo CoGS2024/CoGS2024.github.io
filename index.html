@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CoGS: Controllable Gaussian Splatting</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-cuCtgP1w1FqLZacBtHzGjXeNMXYu9pogO0iJlgpO4+XT4I3tSRkVYRTtId6UTbd" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">CoGS <i class="fas fa-cogs"></i>: Controllable Gaussian Splatting</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://heng14.github.io/">Heng Yu</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://joeljulin.github.io/">Joel Julin</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=rSqodggAAAAJ&hl=es">Zoltan Á Milacski</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=AFaeUrYAAAAJ&hl=en">Koichiro Niinuma</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.laszlojeni.com/">László A. Jeni</a><sup>1</sup>
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Carnegie Mellon University,</span>
+            <span class="author-block"><sup>2</sup>Fujitsu Research of America</span>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2312.05664"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+              </span> -->
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/front.png" alt="Your Image">
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">From a set of monocular images capturing a moving scene, 
+          a dynamic 3D representation is learned using time-varying Gaussians (a). 
+          Then the articulated parts (depicted with the trajectories of the motion) 
+          are identified using masking (b). This allows for learning a fine-scale, 
+          per-Gaussian level of control (c). The approach is capable of synthesizing 
+          novel configurations not present in the original sequence, for example, 
+          independently opening the hood and trunk of the toy car.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="hero">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered ">
+      <div class="column is-full-width">
+        <div class="content has-text-justified">
+          <div class="columns is-multiline ">
+            <div class="column is-one-quarter">
+              <video autoplay controls muted loop playsinline height="100%">
+                <source src="trajectory/jj_traj_no_off.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p style="text-align: center;">Jumping Jacks w/o <span style="font-family: cursive;">L</span><sup>diff</sup></p>
+            </div>
+            <div class="column is-one-quarter">
+              <video autoplay controls muted loop playsinline height="100%">
+                <source src="trajectory/jj_traj_w_off_reg.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p style="text-align: center;">Jumping Jacks w/ <span style="font-family: cursive;">L</span><sup>diff</sup></p>
+            </div>
+            <div class="column is-one-quarter">
+              <video autoplay controls muted loop playsinline height="100%">
+                <source src="trajectory/lego_none.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p style="text-align: center;">Lego w/o <span style="font-family: cursive;">L</span><sup>norm</sup></p>
+            </div>
+            <div class="column is-one-quarter">
+              <video autoplay controls muted loop playsinline height="100%">
+                <source src="trajectory/lego_with_off.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p style="text-align: center;">Lego w/ <span style="font-family: cursive;">L</span><sup>norm</sup></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./synthetic_scene/video_mutant.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./synthetic_scene/video_hellwarrior.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./synthetic_scene/video_ball.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./synthetic_scene/video_standup.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="hero is-light is-small">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Capturing and re-animating the 3D structure of articulated objects present significant barriers. 
+            On one hand, methods requiring extensively calibrated multi-view setups are prohibitively complex and resource-intensive, 
+            limiting their practical applicability. On the other hand, while single-camera Neural Radiance Fields (NeRFs) offer a more 
+            streamlined approach, they have excessive training and rendering costs. 
+          </p>
+          <p>
+            3D Gaussian Splatting would be a suitable alternative but for two reasons. Firstly, existing methods for 
+            3D dynamic Gaussians require synchronized multi-view cameras, and secondly, the lack of controllability in 
+            dynamic scenarios. We present CoGS, a method for Controllable Gaussian Splatting, that enables the direct manipulation 
+            of scene elements, offering real-time control of dynamic scenes without the prerequisite of pre-computing control signals. 
+            We evaluated CoGS using both synthetic and real-world datasets that include dynamic objects that differ in degree of difficulty.
+            In our evaluations, CoGS consistently outperformed existing dynamic and controllable neural representations in terms of visual fidelity.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video.
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered ">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Dynamic 3D Gaussian Splatting</h2>
+        <div class="content has-text-justified">
+          <p>
+            We show results on both real-world and synthetic scenes. For synthetic scenes, we demonstrate the effectiveness of two novel losses, denoted as
+            <span style="font-family: cursive;">L</span><sup>diff</sup> and <span style="font-family: cursive;">L</span><sup>norm</sup>. With <span style="font-family: cursive;">L</span><sup>diff</sup>, the trajectories are more consistent across
+            timesteps. When applying <span style="font-family: cursive;">L</span><sup>norm</sup>, the static portions of the scene (e.g. the lego base) stabilize. This stabilization is evident
+            in the reduced trajectory fluctuations over time. 
+          </p>
+
+          <div class="columns is-centered"><h2 class="title is-4">Results on Synthetic Scenes</h2></div>
+          <div class="columns is-multiline ">
+            <div class="column is-one-quarter">
+              <video autoplay muted loop playsinline height="100%">
+                <source src="trajectory/jj_traj_no_off.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p style="text-align: center;">Jumping Jacks w/o <span style="font-family: cursive;">L</span><sup>diff</sup></p>
+            </div>
+            <div class="column is-one-quarter">
+              <video autoplay muted loop playsinline height="100%">
+                <source src="trajectory/jj_traj_w_off_reg.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p style="text-align: center;">Jumping Jacks w/ <span style="font-family: cursive;">L</span><sup>diff</sup></p>
+            </div>
+            <div class="column is-one-quarter">
+              <video autoplay muted loop playsinline height="100%">
+                <source src="trajectory/lego_none.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p style="text-align: center;">Lego w/o <span style="font-family: cursive;">L</span><sup>norm</sup></p>
+            </div>
+            <div class="column is-one-quarter">
+              <video autoplay muted loop playsinline height="100%">
+                <source src="trajectory/lego_with_off.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p style="text-align: center;">Lego w/ <span style="font-family: cursive;">L</span><sup>norm</sup></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay muted loop playsinline height="100%">
+            <source src="./synthetic_scene/video_mutant.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay muted loop playsinline height="100%">
+            <source src="./synthetic_scene/video_hellwarrior.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay muted loop playsinline height="100%">
+            <source src="./synthetic_scene/video_ball.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay muted loop playsinline height="100%">
+            <source src="./synthetic_scene/video_standup.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <br>
+        <div class="columns is-centered"><h2 class="title is-4">Results on Real-world Scenes</h2></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video autoplay muted loop playsinline height="100%">
+            <source src="real_scene/out_face.mp4" type="video/mp4">
+            <source src="real_scene/chrome/out_face.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" autoplay muted loop playsinline height="100%">
+            <source src="real_scene/out_torchocolate.mp4" type="video/mp4">
+            <source src="real_scene/chrome/out_torchocolate.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster autoplay muted loop playsinline height="100%">
+            <source src="real_scene/out_americano.mp4" type="video/mp4">
+            <source src="real_scene/chrome/out_americano.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" autoplay muted loop playsinline height="100%">
+            <source src="real_scene/out_chickchicken.mp4" type="video/mp4">
+            <source src="real_scene/chrome/out_chickchicken.mp4" type="video/mp4">
+          </video>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Controllable Gaussian Splatting</h2>
+        <div class="content has-text-justified">
+          <p>
+            With our method, we can then control Dynamic 3D Gaussians. Use the sliders below to control the 
+            state of each scene.
+          </p>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column interpolation-video-column">
+            <div id="interpolation-ball-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-ball-slider-1"
+                   step="1" min="0" max="100" value="0" type="range">
+
+            <input class="slider is-fullwidth is-large is-info"
+                    id="interpolation-ball-slider-2"
+                    step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-face-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-face-slider-1"
+                   step="1" min="0" max="100" value="0" type="range">
+
+            <input class="slider is-fullwidth is-large is-info"
+                    id="interpolation-face-slider-2"
+                    step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-car-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-car-slider-1"
+                   step="1" min="0" max="100" value="0" type="range">
+
+            <input class="slider is-fullwidth is-large is-info"
+                    id="interpolation-car-slider-2"
+                    step="1" min="0" max="100" value="0" type="range">
+          </div>
+
+          <div class="column interpolation-video-column">
+            <div id="interpolation-eye-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-eye-slider-1"
+                   step="1" min="0" max="100" value="0" type="range">
+
+            <input class="slider is-fullwidth is-large is-info"
+                    id="interpolation-eye-slider-2"
+                    step="1" min="0" max="100" value="0" type="range">
+          </div>
+
+        </div>
+      </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Citation</h2>
+    <pre><code>@article{yu2023cogs,
+  author    = {Yu, Heng and Julin, Joel and Milacski, Zoltan A and Niinuma, Koichiro and Jeni, Laszlo A},
+  title     = {CoGS: Controllable Gaussian Splatting},
+  journal   = {arXiv},
+  year      = {2023},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            Website source from <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
