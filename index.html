@@ -337,33 +337,46 @@
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
         <div class="item item-steve">
-          <video autoplay muted loop playsinline height="100%">
+          <video autoplay muted loop playsinline height="100%" id="video-steve">
             <source src="real_scene/out_face.mp4" type="video/mp4">
             <source src="real_scene/chrome/out_face.mp4" type="video/mp4">
           </video>
         </div>
         <div class="item item-chair-tp">
-          <video poster="" autoplay muted loop playsinline height="100%">
+          <video poster="" autoplay muted loop playsinline height="100%" id="video-chair-tp">
             <source src="real_scene/out_torchocolate.mp4" type="video/mp4">
             <source src="real_scene/chrome/out_torchocolate.mp4" type="video/mp4">
           </video>
         </div>
         <div class="item item-shiba">
-          <video poster autoplay muted loop playsinline height="100%">
+          <video poster autoplay muted loop playsinline height="100%" id="video-shiba">
             <source src="real_scene/out_americano.mp4" type="video/mp4">
             <source src="real_scene/chrome/out_americano.mp4" type="video/mp4">
           </video>
         </div>
         <div class="item item-fullbody">
-          <video poster="" autoplay muted loop playsinline height="100%">
+          <video poster="" autoplay muted loop playsinline height="100%" id="video-fullbody">
             <source src="real_scene/out_chickchicken.mp4" type="video/mp4">
             <source src="real_scene/chrome/out_chickchicken.mp4" type="video/mp4">
           </video>
         </div>
-        </div>
       </div>
     </div>
   </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var videos = document.querySelectorAll('video');
+  
+      videos.forEach(function (video) {
+        video.addEventListener('error', function () {
+          if (this.nextElementSibling.canPlayType('video/mp4') !== '') {
+            this.src = this.nextElementSibling.src;
+          }
+        });
+      });
+    });
+  </script>
 </section>
 
 
